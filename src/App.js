@@ -1,11 +1,15 @@
-import React from 'react';
 import './App.css';
 import './index.css';
-import useState from 'react'
+import {useState} from 'react'
 
 
 function App() {
   const [Home,setHome]=useState(false);
+
+  function BackBtn(){
+    setHome((prevValue)=>{return !prevValue});
+  } 
+
 
   const [state,setstate]=useState({
     Name:"",
@@ -14,11 +18,7 @@ function App() {
     employees:[]
   }
   )
-
-  function BackBtn(){
-    setHome((prevValue)=>{return !prevValue});
-  } 
-
+  
   const ChangeHandler=(e)=>{
   setstate({...state,[e.target.name] : e.target.value})
   }
@@ -32,13 +32,15 @@ function App() {
     }
    const temp=state.employees;
    temp.push(empObj);
-   setstate(...state,{employees:temp})
+   setstate({...state,employees:temp})
    BackBtn();
-   document.getElementById('forms').reset();
+   document.getElementById('form').reset();
   }
 
   if(Home){
     return(
+      <div className="bodyBackground">
+        <div className="headerText">EMPLOYEE FEEDBACK FORM</div>
     <div id="divContainer">
   {
     state.employees.map((value,index)=>{
@@ -48,31 +50,32 @@ function App() {
     }
     )
   }
-  <button onClick={BackBtn}>Go back</button>
+</div>
+<button onClick={BackBtn} id='BackBtnCs'>Go back</button>
 </div>
 
     )
   }
   else{
   return (
-  <div id="bodyBackground">    
-    <div id="headerText">EMPLOYEE FEEDBACK FORM</div>
+  <div className="bodyBackground">    
+    <div className="headerText">EMPLOYEE FEEDBACK FORM</div>
     <form>
   <label id="nameText" className="labelText">
     Name:
-    <input type="text" name="Name" onChange={ChangeHandler} style={{fontSize:'30px',borderRadius:'20px',marginTop:'20px'}} />
+    <input type="text" name="Name" onChange={ChangeHandler} value={state.Name} style={{fontSize:'30px',borderRadius:'20px',marginTop:'20px'}} />
   </label>
   <br></br>
   <br></br>
   <label id="nameText" className="labelText">
     Department:
-    <input type="text" name="Department" onChange={ChangeHandler} style={{fontSize:'30px',borderRadius:'20px',marginTop:'20px'}}/>
+    <input type="text" name="Department" onChange={ChangeHandler} value={state.Department} style={{fontSize:'30px',borderRadius:'20px',marginTop:'20px'}}/>
   </label>
   <br></br>
   <br></br>
   <label id="nameText" className="labelText">
     Rating:
-    <input type="number" name="Rating" onChange={ChangeHandler} style={{fontSize:'30px',borderRadius:'20px',marginTop:'20px'}}/>
+    <input type="number" name="Rating" onChange={ChangeHandler} value={state.Name.Rating} style={{fontSize:'30px',borderRadius:'20px',marginTop:'20px'}}/>
   </label>
   <br></br>
   <br></br>
